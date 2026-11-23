@@ -32,16 +32,17 @@ public class NickSkinClient implements ClientModInitializer {
 
             dispatcher.register(ClientCommandManager.literal("skin")
                 .then(ClientCommandManager.literal("set")
-                    .then(ClientCommandManager.argument("player", StringArgumentType.word())
+                    .then(ClientCommandManager.argument("player", StringArgumentType.greedyString())
                         .executes(ctx -> {
                             NickConfig.skinName = StringArgumentType.getString(ctx, "player");
                             NickConfig.save();
-                            ctx.getSource().sendFeedback(Text.literal(
-                                "Skin set to " + NickConfig.skinName + "'s skin (they must be in the tab list)."));
+                            SkinFetcher.load(NickConfig.skinName);
+                            ctx.getSource().sendFeedback(Text.literal("Loading skin for " + NickConfig.skinName + "..."));
                             return 1;
                         })))
                 .then(ClientCommandManager.literal("reset").executes(ctx -> {
                     NickConfig.skinName = null; NickConfig.save();
+                    SkinFetcher.clear();
                     ctx.getSource().sendFeedback(Text.literal("Skin reset."));
                     return 1;
                 })));
