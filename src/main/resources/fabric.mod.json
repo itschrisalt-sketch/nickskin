@@ -3,6 +3,7 @@
   "id": "nickskin",
   "version": "${version}",
   "name": "NickSkin",
+  "icon": "assets/nickskin/icon.png",
   "description": "Client-side custom nick (head, tab list, kill messages) and skin.",
   "environment": "client",
   "entrypoints": {
